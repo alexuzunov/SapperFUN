@@ -1,24 +1,19 @@
+#include <SoftwareSerial.h>
 
-/* Reader for I2C Protocol 
- * Sherwin Chiu 
- * Nov 19th, 2019
- */
- 
-#include <Wire.h> // built in Arduino library
+SoftwareSerial mySerial(11, 12); //RX, TX
+String output;
+int pause = 1000;
+unsigned long currentTime = 0;
 
-void setup(){
-  Serial.begin(9600);
-  Wire.begin(5);
-  Wire.onReceive(receiveEvent);
+void setup() {
+  Serial.begin(115200);
+  mySerial.begin(115200);
 }
 
-void loop(){
-}
-
-void receiveEvent(int howMany){
-  while(Wire.available())    // slave may send less than requested
-  { 
-    char c = Wire.read();    // receive a byte as character
-    Serial.print(c);         // print the character
+void loop() {
+  if (millis() >= currentTime + pause){
+    currentTime += pause;
+    output = mySerial.read();
+    Serial.println(output);  
   }
-} 
+}
