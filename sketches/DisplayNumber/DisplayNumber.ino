@@ -1,4 +1,4 @@
-++#define A 12
+#define A 12
 #define B 11
 #define C 10
 #define D 9
